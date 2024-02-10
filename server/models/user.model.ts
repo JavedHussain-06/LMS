@@ -16,49 +16,51 @@ export interface IUser extends Document {
   courses: Array<{ Course: string }>;
   comparePassword: (password: string) => Promise<boolean>;
 }
-const userSchema: Schema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "Please Enter Your Name"],
-  },
-  email: {
-    type: String,
-    required: [true, "Please Enter Your Email"],
-    unique: true,
-    validator: function (value: string) {
-      return emailregexpattern.test(value);
-    },
-    message: "Please Enter Valid Email",
-  },
-  password: {
-    type: String,
-    required: [true, "Please Enter Your Password"],
-    minlength: [8, "Password should be greater than 8 characters"],
-    select: false,
-  },
-  avatar: {
-    public_id: {
+const userSchema: Schema = new mongoose.Schema(
+  {
+    name: {
       type: String,
-      url: String,
+      required: [true, "Please Enter Your Name"],
     },
-    role: {
+    email: {
       type: String,
-      default: "user",
-    },
-    isVerified: {
-      type: Boolean,
-      default: false,
-    },
-    courses: [
-      {
-        courseId: String,
+      required: [true, "Please Enter Your Email"],
+      unique: true,
+      validator: function (value: string) {
+        return emailregexpattern.test(value);
       },
-    ],
+      message: "Please Enter Valid Email",
+    },
+    password: {
+      type: String,
+      required: [true, "Please Enter Your Password"],
+      minlength: [8, "Password should be greater than 8 characters"],
+      select: false,
+    },
+    avatar: {
+      public_id: {
+        type: String,
+        url: String,
+      },
+      role: {
+        type: String,
+        default: "user",
+      },
+      isVerified: {
+        type: Boolean,
+        default: false,
+      },
+      courses: [
+        {
+          courseId: String,
+        },
+      ],
+    },
   },
-},{timestamps : true});
+  { timestamps: true }
+);
 
-
-// Hashing Password Before Saving 
+// Hashing Password Before Saving
 
 userSchema.pre<IUser>("save", async function (next) {
   if (!this.isModified("password")) {
@@ -75,6 +77,6 @@ userSchema.methods.comparePassword = async function (password: string) {
   return await bcrypt.compare(password, this.password);
 };
 
-const userModel: Model<IUser> = mongoose.model("User", userSchema);
+const userModel: Model<IUser> = mongoose.model<IUser>("User", userSchema);
 
 export default userModel;
