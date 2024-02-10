@@ -10,3 +10,5 @@ const redisClient = () =>{
 }
 
 const redis = new Redis(redisClient())
+
+// /^[^\s@]+@[^\s@]+\.[^@]+$/
