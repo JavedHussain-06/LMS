@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>LMS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            min-width: 100%;
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+            background-color: #fafa;
+            color: #222222 ;
+        }
+        a{
+            color:#000;
+            text-decoration: none;
+        }
+        h1{
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-top: 0;
+            text-align: center;
+        }
+        p{
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        table td {
+            vertical-align: top;
+        }
+        .email-wrapper{
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .enail-header{
+            background-color: #0070f3;
+            color: #ffffff;
+            padding: 24px;
+        }
+        .email-body{
+            padding: 24px;
+            background-color: #ffffff;
+        }
+        .email-footerP{
+            background-color: #ffffff;
+            padding: 24px;
+        }
+        /* Button */
+        .button{
+            background-color: #0070f3;
+            color: #ffffff;
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 4px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-wrapper">
+        <div class="email-header">
+            <h1>Welcome to LMS</h1>
+        </div>
+        <div class="email-body">
+            <p>Hello <%= user.name %>,</p> <p>Thanks for signing up. Please click the button below to activate your account.</p>
+            <h2> <%= activationCode %></h2>
+            <p>Please enter this code on the activation page within the next 5 minutes</p>
+            <p>If you did not sign up, please ignore this email</p>
+        </div>
+        <div class="email-footer">
+            <p>If you have any question, Please don't hesitate to contact us <a href="#">Support@LMS.com</a></p>
+        </div>
+    </div>
+</body>
+</html>
