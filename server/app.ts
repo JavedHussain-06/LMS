@@ -5,7 +5,6 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import { ErrorHandleMiddleware } from "./middleware/error";
 import userRouter from "./routes/user.routes";
-import bodyParser from "body-parser";
 
 // cookieParser
 app.use(cookieParser());
@@ -18,12 +17,10 @@ app.use(
   })
 );
 
-// bodyParser
-// Use body-parser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
+// routes
 
 app.use("/api/v1", userRouter)
 

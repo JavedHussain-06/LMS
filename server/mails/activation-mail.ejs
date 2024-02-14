@@ -36,7 +36,7 @@
             max-width: 600px;
             margin: 0 auto;
         }
-        .enail-header{
+        .email-header{
             background-color: #0070f3;
             color: #ffffff;
             padding: 24px;
@@ -69,7 +69,7 @@
         </div>
         <div class="email-body">
             <p>Hello <%= user.name %>,</p> <p>Thanks for signing up. Please click the button below to activate your account.</p>
-            <h2> <%= activationCode %></h2>
+            <h2><%= user.activationCode %></h2>
             <p>Please enter this code on the activation page within the next 5 minutes</p>
             <p>If you did not sign up, please ignore this email</p>
         </div>

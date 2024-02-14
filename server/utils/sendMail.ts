@@ -1,4 +1,5 @@
 import nodemailer, { Transporter } from "nodemailer";
+require("dotenv").config();
 import ejs from "ejs";
 import path from "path";
 
