@@ -41,8 +41,6 @@ export const RegistrationUser = CatchAsyncError(
 
       const data = { user: { name: user.name, activationCode } };
 
-      console.log(data)
-
       const html = await ejs.renderFile(
         path.join(__dirname, "../mails/activation-mail.ejs"),
         data
@@ -108,8 +106,6 @@ export const activateUser = CatchAsyncError(
         activation_token,
         process.env.ACTIVATION_SECRET as Secret
       ) as { user: IUser; activationCode: string };
-
-        console.log("hey its working from activeUser function")
 
       if (newUser.activationCode !== activation_code) {
         return next(new ErrorHandler("Invalid activation code", 400));
