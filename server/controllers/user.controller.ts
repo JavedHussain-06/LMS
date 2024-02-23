@@ -96,13 +96,15 @@ export const createActivationToken = (user: any): IActivation => {
 // active user
 
 interface IActivationRequest extends Request {
-  body: { activation_token: string; activation_code: string };
+  activation_token: string;
+  activation_code: string;
 }
 
 export const activateUser = CatchAsyncError(
   async (req: IActivationRequest, res: Response, next: NextFunction) => {
     try {
-      const { activation_token, activation_code } = req.body;
+      const { activation_token, activation_code } =
+        req.body as IActivationRequest;
       const newUser: { user: IUser; activationCode: string } = jwt.verify(
         activation_token,
         process.env.ACTIVATION_SECRET as Secret
@@ -137,16 +139,15 @@ export const activateUser = CatchAsyncError(
 
 // Login user
 interface ILoginRequest {
-  body: {
-    email: string;
-    password: string;
-  };
+  email: string;
+  password: string;
 }
 
 export const loginUser = CatchAsyncError(
-  async (req: ILoginRequest, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { email, password } = req.body;
+      const { email, password } = req.body as ILoginRequest;
+
       if (!email || !password) {
         return next(new ErrorHandler("Please enter email and password", 400));
       }
@@ -167,17 +168,24 @@ export const loginUser = CatchAsyncError(
 );
 
 // logout user
+
 export const logoutUser = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.cookie("access_token", "" , { maxAge : 1});
-      res.cookie("refresh_token", "" , { maxAge : 1});
+      // Clear the access token cookie
+      res.clearCookie("access_token", { maxAge: 1 });
+
+      // Clear the refresh token cookie
+      res.clearCookie("refresh_token", { maxAge: 1 });
+
+      // Send success response
       res.status(200).json({
-        success: true,  
+        success: true,
         message: "Logged out successfully",
       });
-    }catch(err : any){
-      return next(new ErrorHandler(err.message, err.statusCode || 400));
+    } catch (error: any) {
+      // Handle errors
+      return next(new ErrorHandler(error.message, error.statusCode || 400));
     }
   }
-)
+);
