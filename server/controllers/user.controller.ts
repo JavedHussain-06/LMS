@@ -7,6 +7,7 @@ import ejs from "ejs";
 import path from "path";
 import sendEmail from "../utils/sendMail";
 import { sendToken } from "../utils/jwt";
+import { redis } from "../utils/redis";
 
 // Register user
 interface IRegistration {
@@ -169,14 +170,29 @@ export const loginUser = CatchAsyncError(
 
 // logout user
 
+// logout user
 export const logoutUser = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
+      // Ensure that the user data is attached to the req object
+      // const userId = req.user?.id;
+
+      // Log the incoming request headers
+      console.log("Request Headers:", req.headers);
+      // console.log(`User ID: ${userId}`);
+
+      // if (!userId) {
+      //   return next(new ErrorHandler("User not found in request", 404));
+      // }
+
       // Clear the access token cookie
       res.clearCookie("access_token", { maxAge: 1 });
 
       // Clear the refresh token cookie
       res.clearCookie("refresh_token", { maxAge: 1 });
+
+      // Delete user data from Redis cache
+      // await redis.del(userId);
 
       // Send success response
       res.status(200).json({
@@ -189,3 +205,4 @@ export const logoutUser = CatchAsyncError(
     }
   }
 );
+

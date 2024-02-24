@@ -9,7 +9,5 @@ userRouter.post("/active-user", activateUser);
 userRouter.post("/login", loginUser);
 // Apply isAuthenticated middleware to routes that require authentication
 userRouter.get("/logout", isAuthenticated, logoutUser);
-userRouter.get("/logout",logoutUser);
-
 
 export default userRouter;
